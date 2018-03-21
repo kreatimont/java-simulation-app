@@ -4,7 +4,6 @@ import simulation.CornModel;
 import process.Dispatcher;
 import process.IModelFactory;
 import rnd.Negexp;
-import rnd.Norm;
 import rnd.Triangular;
 import widgets.ChooseData;
 import widgets.ChooseRandom;
@@ -20,10 +19,9 @@ import java.awt.*;
 public class MainForm {
 
     private JPanel modelConfigurationPanel;
-    private JSpinner carAmount;
-    private JSpinner combineAmount;
-    private ChooseRandom timeModeling;
-    private ChooseRandom timeAssembly;
+    private ChooseData carAmount;
+    private ChooseData timeModeling;
+    private ChooseRandom timeInterval;
     private ChooseRandom timeLoadingCar;
     private ChooseRandom timeUnloadingCar;
     private JButton runBtn;
@@ -31,9 +29,9 @@ public class MainForm {
     private JPanel diagramTabPanel;
     private JTextArea resultTextArea;
     private Diagram diagram3;
-    private Diagram diagram2;
+    private Diagram diagramCarTime;
     private Diagram diagramHarvesterTime;
-    private ChooseData carAmountChooseData;
+    private ChooseData harvesterAmount;
 
     private MainForm() {
         this.setupUI();
@@ -42,14 +40,13 @@ public class MainForm {
     }
 
     private void setupFields() {
-        carAmount.setValue(5);
-        combineAmount.setValue(2);
+        carAmount.setDouble(5.0);
+        harvesterAmount.setDouble(5.0);
+        timeModeling.setDouble(5.0);
 
-        timeModeling.setRandom(new Negexp(1));
         timeLoadingCar.setRandom(new Triangular(2, 3, 5));
-        timeModeling.setRandom(new Norm(5, 1));
         timeUnloadingCar.setRandom(new Negexp(4));
-        timeAssembly.setRandom(new Negexp(5));
+        timeInterval.setRandom(new Negexp(5));
 
     }
 
@@ -57,9 +54,10 @@ public class MainForm {
         timeLoadingCar.setTitle("Время загрузки машины");
         timeModeling.setTitle("Время моделирования");
         timeUnloadingCar.setTitle("Время разгрузки машины");
-        timeAssembly.setTitle("Время сборки");
+        timeInterval.setTitle("Время сборки");
 
-        carAmountChooseData.setTitle("Количество машин");
+        carAmount.setTitle("Количество машин");
+        harvesterAmount.setTitle("Количество комбайнов");
     }
 
     private void setUIActions() {
@@ -82,7 +80,7 @@ public class MainForm {
     private void startTest() {
         this.runBtn.setEnabled(false);
         diagramHarvesterTime.clear();
-        diagram2.clear();
+        diagramCarTime.clear();
         diagram3.clear();
         Dispatcher dispatcher = new Dispatcher();
         dispatcher.addDispatcherFinishListener(() -> MainForm.this.runBtn.setEnabled(true));
@@ -96,7 +94,23 @@ public class MainForm {
         return diagramHarvesterTime;
     }
 
+    public Diagram getDiagramCarTime() {
+        return diagramCarTime;
+    }
+
     public int getCarAmount() {
-        return this.carAmountChooseData.getInt();
+        return this.carAmount.getInt();
+    }
+
+    public int getHarvesterAmount() {
+        return this.harvesterAmount.getInt();
+    }
+
+    public ChooseData getTimeModeling() {
+        return timeModeling;
+    }
+
+    public ChooseRandom getTimeInterval() {
+        return timeInterval;
     }
 }

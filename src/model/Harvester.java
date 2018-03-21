@@ -5,7 +5,7 @@ import process.DispatcherFinishException;
 import simulation.CornModel;
 import ui.MainForm;
 
-/* Зерноуборочная машина */
+/* Зерноуборочная машина, комбайн */
 public class Harvester extends Actor {
 
     private MainForm gui;
