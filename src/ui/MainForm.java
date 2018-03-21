@@ -21,17 +21,23 @@ public class MainForm {
     private JPanel modelConfigurationPanel;
     private ChooseData carAmount;
     private ChooseData timeModeling;
+    // час авто в дороге
     private ChooseRandom timeInterval;
+    //время загрузки/разгрузки
     private ChooseRandom timeLoadingCar;
     private ChooseRandom timeUnloadingCar;
     private JButton runBtn;
     private JTabbedPane tabbedPane;
     private JPanel diagramTabPanel;
     private JTextArea resultTextArea;
-    private Diagram diagram3;
-    private Diagram diagramCarTime;
-    private Diagram diagramHarvesterTime;
+    //диаграмма очереди машин на разгрузку
+    private Diagram diagramCarUnloadingQueue;
+    //диагрмма очереди машин на загрузку
+    private Diagram diagramCarLoadingQueue;
+    //диаграмма очереди комбайнов
+    private Diagram diagramHarvesterQueue;
     private ChooseData harvesterAmount;
+    private JSplitPane splitPanel;
 
     private MainForm() {
         this.setupUI();
@@ -53,11 +59,15 @@ public class MainForm {
     private void setupUI() {
         timeLoadingCar.setTitle("Время загрузки машины");
         timeModeling.setTitle("Время моделирования");
-        timeUnloadingCar.setTitle("Время разгрузки машины");
-        timeInterval.setTitle("Время сборки");
+        timeUnloadingCar.setTitle("Время сбора зерна");
+        timeInterval.setTitle("Интервал машины в дороге");
 
         carAmount.setTitle("Количество машин");
         harvesterAmount.setTitle("Количество комбайнов");
+
+        diagramHarvesterQueue.setTitleText("Время очереди комбайна");
+        diagramCarLoadingQueue.setTitleText("Время очереди машин на загрузку");
+        diagramCarUnloadingQueue.setTitleText("Время очереди машин на разгрузку");
     }
 
     private void setUIActions() {
@@ -79,9 +89,9 @@ public class MainForm {
 
     private void startTest() {
         this.runBtn.setEnabled(false);
-        diagramHarvesterTime.clear();
-        diagramCarTime.clear();
-        diagram3.clear();
+        diagramHarvesterQueue.clear();
+        diagramCarLoadingQueue.clear();
+        diagramCarUnloadingQueue.clear();
         Dispatcher dispatcher = new Dispatcher();
         dispatcher.addDispatcherFinishListener(() -> MainForm.this.runBtn.setEnabled(true));
         IModelFactory factory = (d) -> new CornModel(dispatcher, this);
@@ -90,12 +100,12 @@ public class MainForm {
         dispatcher.start();
     }
 
-    public Diagram getDiagramHarvesterTime() {
-        return diagramHarvesterTime;
+    public Diagram getDiagramHarvesterQueue() {
+        return diagramHarvesterQueue;
     }
 
-    public Diagram getDiagramCarTime() {
-        return diagramCarTime;
+    public Diagram getDiagramCarLoadingQueue() {
+        return diagramCarLoadingQueue;
     }
 
     public int getCarAmount() {

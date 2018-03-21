@@ -1,9 +1,6 @@
 package simulation;
 
-import model.Car;
-import model.Corn;
-import model.CornGenerator;
-import model.Harvester;
+import model.*;
 import process.Dispatcher;
 import process.MultiActor;
 
@@ -16,20 +13,21 @@ public class CornModel {
     private MainForm gui;
 
     private Dispatcher dispatcher;
-    private CornGenerator cornGenerator;
 
-    private Corn corn;
     private Car car;
     private Harvester harvester;
+    private CornStore cornStore;
 
     private MultiActor cars;
     private MultiActor harvesters;
 
     private QueueForTransactions<Corn> harvesterQueue;
     private QueueForTransactions<Corn> carQueue;
+    private QueueForTransactions<Corn> cornStoreQueue;
 
     private DiscretHisto harvesterDiscreteHisto;
     private DiscretHisto carDiscreteHisto;
+    private DiscretHisto cornStoreHisto;
 
     public CornModel(Dispatcher dispatcher, MainForm gui) {
         this.dispatcher = dispatcher;
@@ -41,9 +39,12 @@ public class CornModel {
         this.carDiscreteHisto = new DiscretHisto();
         this.carQueue = new QueueForTransactions<>("CarQueue", this.dispatcher, this.carDiscreteHisto);
 
-        this.car = new Car("Car", this.gui, this);
-        this.corn = new Corn(123.0);
+        this.cornStoreHisto = new DiscretHisto();
+        this.cornStoreQueue = new QueueForTransactions<>("CornStoreQueue", this.dispatcher, this.cornStoreHisto);
+
+        this.car = new Car(this.gui, "Car", this);
         this.harvester = new Harvester(this.gui, "Harvester", this);
+        this.cornStore = new CornStore(this.gui, "CornStore", this);
 
         this.cars = new MultiActor();
         this.cars.setNameForProtocol("MultiActor Car");
@@ -55,21 +56,19 @@ public class CornModel {
         this.harvesters.setOriginal(this.harvester);
         this.harvesters.setNumberOfClones(gui.getHarvesterAmount());
 
-        this.cornGenerator = new CornGenerator(this.gui, this, "CornGenerator");
-
         this.componentToStartList();
     }
 
     private void componentToStartList() {
-        dispatcher.addStartingActor(this.harvester);
+
         dispatcher.addStartingActor(this.cars);
         dispatcher.addStartingActor(this.harvesters);
-        dispatcher.addStartingActor(this.cornGenerator);
+        dispatcher.addStartingActor(this.cornStore);
     }
 
     public void initForTest() {
-        this.harvesterQueue.setPainter(gui.getDiagramHarvesterTime().getPainter());
-        this.carQueue.setPainter(gui.getDiagramCarTime().getPainter());
+        this.harvesterQueue.setPainter(gui.getDiagramHarvesterQueue().getPainter());
+        this.carQueue.setPainter(gui.getDiagramCarLoadingQueue().getPainter());
         dispatcher.setProtocolFileName("Console");
     }
 
