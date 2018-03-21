@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="MainForm">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ui.MainForm">
   <grid id="27dc6" binding="modelConfigurationPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="500" height="508"/>
+      <xy x="20" y="20" width="611" height="1193"/>
     </constraints>
     <properties>
       <background color="-4987455"/>
@@ -14,7 +14,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="89fe5" layout-manager="GridLayoutManager" row-count="13" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="89fe5" layout-manager="GridLayoutManager" row-count="10" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <splitpane position="left"/>
@@ -40,17 +40,9 @@
                   <text value="Кол-во комбайнов"/>
                 </properties>
               </component>
-              <component id="760a5" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Час моделирования"/>
-                </properties>
-              </component>
               <component id="2e93a" class="widgets.ChooseRandom" binding="timeModeling">
                 <constraints>
-                  <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
               </component>
@@ -66,54 +58,38 @@
                 </constraints>
                 <properties/>
               </component>
-              <component id="f73ef" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Время сборки зерн"/>
-                </properties>
-              </component>
               <component id="df8ee" class="widgets.ChooseRandom" binding="timeAssembly">
                 <constraints>
-                  <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
-              </component>
-              <component id="fadda" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Время загрузки авто"/>
-                </properties>
               </component>
               <component id="7060b" class="widgets.ChooseRandom" binding="timeLoadingCar">
-                <constraints>
-                  <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties/>
-              </component>
-              <component id="83df3" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Время разгрузки авто"/>
-                </properties>
-              </component>
-              <component id="aab96" class="widgets.ChooseRandom" binding="timeUnloadingCar">
                 <constraints>
                   <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
               </component>
+              <component id="aab96" class="widgets.ChooseRandom" binding="timeUnloadingCar">
+                <constraints>
+                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+              </component>
               <component id="fe40e" class="javax.swing.JButton" binding="runBtn">
                 <constraints>
-                  <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Run"/>
+                </properties>
+              </component>
+              <component id="cd3b8" class="widgets.ChooseData" binding="carAmountChooseData">
+                <constraints>
+                  <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="1" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value=""/>
                 </properties>
               </component>
             </children>
@@ -130,7 +106,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <grid id="102f6" binding="diagramTabPanel" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                  <grid id="102f6" binding="diagramTabPanel" layout-manager="GridLayoutManager" row-count="5" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints>
                       <tabbedpane title="Diagram"/>
@@ -146,9 +122,9 @@
                           <text value="Results"/>
                         </properties>
                       </component>
-                      <component id="34d50" class="widgets.Diagram" binding="resultDiagram">
+                      <component id="34d50" class="widgets.Diagram" binding="diagram3">
                         <constraints>
-                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
                           <panelBackground color="-2889736"/>
@@ -157,13 +133,31 @@
                       </component>
                       <component id="55d4c" class="javax.swing.JTextArea" binding="resultTextArea">
                         <constraints>
-                          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="1" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="1" anchor="0" fill="3" indent="0" use-parent-layout="false">
                             <minimum-size width="100" height="200"/>
                             <preferred-size width="150" height="50"/>
                           </grid>
                         </constraints>
                         <properties>
                           <text value="Some text"/>
+                        </properties>
+                      </component>
+                      <component id="f66c3" class="widgets.Diagram" binding="diagram2">
+                        <constraints>
+                          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <panelBackground color="-2889736"/>
+                          <titleText value="Result"/>
+                        </properties>
+                      </component>
+                      <component id="d290a" class="widgets.Diagram" binding="diagramHarvesterTime">
+                        <constraints>
+                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <panelBackground color="-2889736"/>
+                          <titleText value="Result"/>
                         </properties>
                       </component>
                     </children>
