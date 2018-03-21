@@ -100,6 +100,10 @@ public class MainForm {
         dispatcher.start();
     }
 
+    public Diagram getDiagramCarUnloadingQueue() {
+        return diagramCarUnloadingQueue;
+    }
+
     public Diagram getDiagramHarvesterQueue() {
         return diagramHarvesterQueue;
     }

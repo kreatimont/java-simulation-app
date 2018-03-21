@@ -2,8 +2,12 @@ package model;
 
 import process.Actor;
 import process.DispatcherFinishException;
+import process.QueueForTransactions;
 import simulation.CornModel;
 import ui.MainForm;
+import widgets.ChooseRandom;
+
+import java.util.function.BooleanSupplier;
 
 /* Зерноуборочная машина, комбайн */
 public class Harvester extends Actor {
@@ -12,17 +16,42 @@ public class Harvester extends Actor {
 
     private String name;
 
+    private QueueForTransactions<Harvester> queue;
+    private ChooseRandom random;
+    private double finishTime;
+    private boolean full;
+
     public Harvester(MainForm gui, String name, CornModel cornModel) {
-        // TODO Auto-generated constructor stub
         super();
         this.gui = gui;
         this.name = name;
+
+        this.queue = cornModel.getHarvesterQueue();
+        this.random = gui.getTimeInterval();
+        this.finishTime = gui.getTimeModeling().getDouble();
     }
 
     @Override
     protected void rule() throws DispatcherFinishException {
-        // TODO Auto-generated method stub
+        BooleanSupplier full = this::isFull;
+        while (getDispatcher().getCurrentTime() <= finishTime) {
+            getDispatcher().printToProtocol(getNameForProtocol() + " working on field");
+            holdForTime(random.next());
+            getDispatcher().printToProtocol(
+                    " " + getNameForProtocol() + "combine take corn");
 
+            queue.add(this);
+            waitForCondition(full, "must be full");
+        }
+    }
+
+    public void setFull(boolean full) {
+        this.full = full;
+    }
+
+    private boolean isFull() {
+
+        return full;
     }
 
 }

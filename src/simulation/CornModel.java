@@ -21,9 +21,9 @@ public class CornModel {
     private MultiActor cars;
     private MultiActor harvesters;
 
-    private QueueForTransactions<Corn> harvesterQueue;
-    private QueueForTransactions<Corn> carQueue;
-    private QueueForTransactions<Corn> cornStoreQueue;
+    private QueueForTransactions<Harvester> harvesterQueue;
+    private QueueForTransactions<Car> carQueue;
+    private QueueForTransactions<Car> cornStoreQueue;
 
     private DiscretHisto harvesterDiscreteHisto;
     private DiscretHisto carDiscreteHisto;
@@ -60,7 +60,6 @@ public class CornModel {
     }
 
     private void componentToStartList() {
-
         dispatcher.addStartingActor(this.cars);
         dispatcher.addStartingActor(this.harvesters);
         dispatcher.addStartingActor(this.cornStore);
@@ -69,10 +68,19 @@ public class CornModel {
     public void initForTest() {
         this.harvesterQueue.setPainter(gui.getDiagramHarvesterQueue().getPainter());
         this.carQueue.setPainter(gui.getDiagramCarLoadingQueue().getPainter());
+        this.cornStoreQueue.setPainter(gui.getDiagramCarUnloadingQueue().getPainter());
         dispatcher.setProtocolFileName("Console");
     }
 
-    public QueueForTransactions<Corn> getHarvesterQueue() {
+    public QueueForTransactions<Harvester> getHarvesterQueue() {
         return harvesterQueue;
+    }
+
+    public QueueForTransactions<Car> getCarQueue() {
+        return carQueue;
+    }
+
+    public QueueForTransactions<Car> getCornStoreQueue() {
+        return cornStoreQueue;
     }
 }
