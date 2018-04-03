@@ -12,7 +12,7 @@ class Main {
         //create class from reflection
         try {
 
-            Object objectPhone = Phone.class.getConstructor(String.class, String.class, String.class, double.class, double.class).
+            Object objectPhone = Class.forName("Phone").getConstructor(String.class, String.class, String.class, double.class, double.class).
                     newInstance("Iphone 7", "3124235233", "China", 1920.0, 1240.0);
 
             Method methodDisplaySize = Phone.class.getDeclaredMethod("displaySize");
@@ -24,7 +24,7 @@ class Main {
             System.out.println(String.format("Default phone: %1$s [displaySize: %2$f]", phone.model, phone.displaySize()));
             System.out.println(String.format("Reflection phone: %1$s [displaySize: %2$f]", model, displaySize));
 
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException | NoSuchFieldException e) {
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException | NoSuchFieldException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 

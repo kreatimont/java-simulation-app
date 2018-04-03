@@ -18,6 +18,7 @@ import java.awt.*;
 
 public class MainForm {
 
+
     private JPanel modelConfigurationPanel;
     private ChooseData carAmount;
     private ChooseData timeModeling;
@@ -127,4 +128,13 @@ public class MainForm {
     public ChooseRandom getTimeInterval() {
         return timeInterval;
     }
+
+    public ChooseRandom getTimeLoadingCar() {
+        return timeLoadingCar;
+    }
+
+    public ChooseRandom getTimeUnloadingCar() {
+        return timeUnloadingCar;
+    }
+
 }

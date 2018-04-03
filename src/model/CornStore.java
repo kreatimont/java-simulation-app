@@ -8,6 +8,8 @@ import sun.applet.Main;
 import ui.MainForm;
 import widgets.ChooseRandom;
 
+import java.util.function.BooleanSupplier;
+
 /*Элеватор, склад зерна -- разгружает машину*/
 public class CornStore extends Actor {
 
@@ -20,13 +22,16 @@ public class CornStore extends Actor {
 
     @Override
     protected void rule() throws DispatcherFinishException {
+        BooleanSupplier emptyQueueSupplier = () -> queue.size() > 0;
         while (getDispatcher().getCurrentTime() <= finishTime) {
-            holdForTime(random.next());
+            waitForCondition(emptyQueueSupplier, "Need at least one car for unloading");
+            Car car = this.queue.removeFirst();
             getDispatcher().printToProtocol(
-                    "  " + getNameForProtocol() + "CornStore");
-//            Corn corn = new Corn(dispatcher.getCurrentTime());
-
-//            queue.add();
+                    "  " + getNameForProtocol() + "unloading car");
+            holdForTime(random.next());
+            car.setEmpty(true);
+            getDispatcher().printToProtocol(
+                    "  " + getNameForProtocol() + "unload car success");
         }
     }
 
@@ -36,7 +41,7 @@ public class CornStore extends Actor {
         this.name = name;
 
         this.queue = cornModel.getCornStoreQueue();
-        this.random = gui.getTimeInterval();
+        this.random = gui.getTimeUnloadingCar();
         this.finishTime = gui.getTimeModeling().getDouble();
 
     }

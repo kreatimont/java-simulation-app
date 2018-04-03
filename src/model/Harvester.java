@@ -16,7 +16,8 @@ public class Harvester extends Actor {
 
     private String name;
 
-    private QueueForTransactions<Harvester> queue;
+    private QueueForTransactions<Harvester> queueHarvesters;
+    private QueueForTransactions<Car> queueCarForLoading;
     private ChooseRandom random;
     private double finishTime;
     private boolean full;
@@ -26,7 +27,8 @@ public class Harvester extends Actor {
         this.gui = gui;
         this.name = name;
 
-        this.queue = cornModel.getHarvesterQueue();
+        this.queueHarvesters = cornModel.getHarvesterQueue();
+        this.queueCarForLoading = cornModel.getCarQueue();
         this.random = gui.getTimeInterval();
         this.finishTime = gui.getTimeModeling().getDouble();
     }
@@ -34,14 +36,26 @@ public class Harvester extends Actor {
     @Override
     protected void rule() throws DispatcherFinishException {
         BooleanSupplier full = this::isFull;
+        BooleanSupplier queueCarEmptySupplier =  () -> this.queueCarForLoading.size() > 0;
         while (getDispatcher().getCurrentTime() <= finishTime) {
             getDispatcher().printToProtocol(getNameForProtocol() + " working on field");
             holdForTime(random.next());
             getDispatcher().printToProtocol(
-                    " " + getNameForProtocol() + "combine take corn");
-
-            queue.add(this);
-            waitForCondition(full, "must be full");
+                    " " + getNameForProtocol() + "harvester take corn");
+            this.queueHarvesters.add(this);
+            holdForTime(random.next());
+            waitForCondition(full, "harvester must be full");
+            this.setFull(true);
+            getDispatcher().printToProtocol(getNameForProtocol() + " harvester is full");
+            if (this.queueCarForLoading.size() > 0) {
+                Car car = this.queueCarForLoading.removeFirst();
+                getDispatcher().printToProtocol(getNameForProtocol() + " harvester start load car");
+                holdForTime(random.next());
+                car.setFull(true);
+                getDispatcher().printToProtocol(getNameForProtocol() + " harvester load car success");
+                this.setFull(false);
+            }
+            
         }
     }
 
@@ -50,7 +64,6 @@ public class Harvester extends Actor {
     }
 
     private boolean isFull() {
-
         return full;
     }
 

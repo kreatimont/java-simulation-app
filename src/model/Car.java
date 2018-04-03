@@ -58,7 +58,7 @@ public class Car extends Actor {
 
         this.queueField = cornModel.getCarQueue();
         this.queueStore = cornModel.getCornStoreQueue();
-        this.random = gui.getTimeInterval();
+        this.random = gui.getTimeLoadingCar();
         this.finishTime = gui.getTimeModeling().getDouble();
     }
 

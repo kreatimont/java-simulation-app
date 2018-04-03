@@ -60,8 +60,8 @@ public class CornModel {
     }
 
     private void componentToStartList() {
-        dispatcher.addStartingActor(this.cars);
         dispatcher.addStartingActor(this.harvesters);
+        dispatcher.addStartingActor(this.cars);
         dispatcher.addStartingActor(this.cornStore);
     }
 
