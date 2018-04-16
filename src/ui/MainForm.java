@@ -8,9 +8,12 @@ import rnd.Triangular;
 import widgets.ChooseData;
 import widgets.ChooseRandom;
 import widgets.Diagram;
+import widgets.stat.StatisticsManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 //время сборки зерна
 //время разгрузки
@@ -39,6 +42,7 @@ public class MainForm {
     private Diagram diagramHarvesterQueue;
     private ChooseData harvesterAmount;
     private JSplitPane splitPanel;
+    private StatisticsManager statManager;
 
     private MainForm() {
         this.setupUI();
@@ -54,6 +58,13 @@ public class MainForm {
         timeLoadingCar.setRandom(new Triangular(2, 3, 5));
         timeUnloadingCar.setRandom(new Negexp(4));
         timeInterval.setRandom(new Negexp(5));
+
+        statManager.setFactory(new IModelFactory() {
+            @Override
+            public Object createModel(Dispatcher dispatcher) {
+                return new CornModel(dispatcher, MainForm.this);
+            }
+        });
 
     }
 
@@ -73,9 +84,16 @@ public class MainForm {
 
     private void setUIActions() {
         runBtn.addActionListener(e -> {
-            resultTextArea.setText("button 'RUN' clicked");
             runBtn.setEnabled(false);
             this.startTest();
+        });
+        this.timeModeling.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainForm.this.diagramCarUnloadingQueue.setHorizontalMaxText(MainForm.this.timeModeling.getText());
+                MainForm.this.diagramCarLoadingQueue.setHorizontalMaxText(MainForm.this.timeModeling.getText());
+                MainForm.this.diagramHarvesterQueue.setHorizontalMaxText(MainForm.this.timeModeling.getText());
+            }
         });
     }
 

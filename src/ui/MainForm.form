@@ -153,13 +153,20 @@
                       </component>
                     </children>
                   </grid>
-                  <grid id="17e95" layout-manager="BorderLayout" hgap="0" vgap="0">
+                  <grid id="17e95" layout-manager="CardLayout" hgap="0" vgap="0">
                     <constraints>
-                      <tabbedpane title="panel2"/>
+                      <tabbedpane title="Stats"/>
                     </constraints>
                     <properties/>
                     <border type="none"/>
-                    <children/>
+                    <children>
+                      <component id="56732" class="widgets.stat.StatisticsManager" binding="statManager">
+                        <constraints>
+                          <card name="Card1"/>
+                        </constraints>
+                        <properties/>
+                      </component>
+                    </children>
                   </grid>
                   <grid id="21977" layout-manager="BorderLayout" hgap="0" vgap="0">
                     <constraints>

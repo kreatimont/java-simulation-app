@@ -31,6 +31,7 @@ public class Harvester extends Actor {
         this.queueCarForLoading = cornModel.getCarQueue();
         this.random = gui.getTimeInterval();
         this.finishTime = gui.getTimeModeling().getDouble();
+        this.setHistoForActorWaitingTime(cornModel.getHarvesterWaitingHisto());
     }
 
     @Override
@@ -44,18 +45,11 @@ public class Harvester extends Actor {
                     " " + getNameForProtocol() + "harvester take corn");
             this.queueHarvesters.add(this);
             holdForTime(random.next());
-            waitForCondition(full, "harvester must be full");
-            this.setFull(true);
-            getDispatcher().printToProtocol(getNameForProtocol() + " harvester is full");
-            if (this.queueCarForLoading.size() > 0) {
-                Car car = this.queueCarForLoading.removeFirst();
-                getDispatcher().printToProtocol(getNameForProtocol() + " harvester start load car");
-                holdForTime(random.next());
-                car.setFull(true);
-                getDispatcher().printToProtocol(getNameForProtocol() + " harvester load car success");
-                this.setFull(false);
-            }
-            
+            waitForCondition(queueCarEmptySupplier, "harvester must be full");
+            Car car = this.queueCarForLoading.removeFirst();
+            car.setFull(true);
+            this.queueHarvesters.remove(this);
+            getDispatcher().printToProtocol(getNameForProtocol() + " harvester load car");
         }
     }
 
